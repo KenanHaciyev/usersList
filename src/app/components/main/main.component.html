@@ -1,0 +1,36 @@
+<div class="wrapper">
+	<a class="add-link" routerLink="/addForm">Add User</a>
+	<div class="table" *ngIf="users.length; else empty">
+		<jqxDataTable
+			[source]="users"
+			[columnsResize]="true"
+			[width]="950"
+			[columns]="columns"
+			[selectionMode]="'multipleRows'"
+			[editable]="true"
+		>
+			<table id="table" border="1">
+				<thead>
+					<tr>
+						<th>Firstname</th>
+						<th>Surname</th>
+						<th>DateOfBirth</th>
+						<th>Gender</th>
+						<th>Mark</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let user of users">
+						<td>{{ user.name }}</td>
+						<td>{{ user.surname }}</td>
+						<td>{{ user.dateOfBirth | date: 'dd/MM/YYYY' }}</td>
+						<td>{{ user.gender }}</td>
+						<td>{{ user.mark }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</jqxDataTable>
+	</div>
+
+	<ng-template #empty><h2 class="empty">No user added...</h2></ng-template>
+</div>

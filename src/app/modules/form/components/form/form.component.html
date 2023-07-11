@@ -1,0 +1,62 @@
+<div class="wrapper">
+	<form class="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+		<h2 class="form__title">Add User</h2>
+
+		<div class="form__control">
+			<label class="form__label" for="name">Name</label>
+			<input class="form__input" type="text" id="name" formControlName="name" />
+			<small class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+				<div *ngIf="form.get('name')?.errors?.['required']">Enter a name</div>
+				<div *ngIf="form.get('name')?.errors?.['minlength']">Name must be minimum 3 characters</div>
+			</small>
+		</div>
+
+		<div class="form__control">
+			<label class="form__label" for="surname">Surname</label>
+			<input class="form__input" type="text" id="surname" formControlName="surname" />
+			<small class="error" *ngIf="form.get('surname')?.touched && form.get('surname')?.invalid">
+				<div *ngIf="form.get('surname')?.errors?.['required']">Enter a surname</div>
+				<div *ngIf="form.get('surname')?.errors?.['minlength']">
+					Surname must be minimum 3 characters
+				</div>
+			</small>
+		</div>
+
+		<div class="form__control">
+			<label class="form__label" for="dateOfBirth">Date of birth</label>
+			<input class="form__input" type="date" id="dateOfBirth" formControlName="dateOfBirth" />
+			<small
+				class="error"
+				*ngIf="form.get('dateOfBirth')?.touched && form.get('dateOfBirth')?.invalid"
+			>
+				<div *ngIf="form.get('dateOfBirth')?.errors?.['required']">Choose a date of birth</div>
+			</small>
+		</div>
+
+		<div class="form__control">
+			<label class="form__label" for="gender">Gender</label>
+			<select class="form__input" id="gender" formControlName="gender">
+				<option name="Male" id="male">Male</option>
+				<option name="Female" id="female">Female</option>
+			</select>
+			<small class="error" *ngIf="form.get('gender')?.touched && form.get('gender')?.invalid">
+				<div *ngIf="form.get('gender')?.errors?.['required']">Choose the gender</div>
+			</small>
+		</div>
+
+		<div class="form__control">
+			<label class="form__label" for="mark">Mark</label>
+			<textarea class="form__input" id="mark" formControlName="mark"></textarea>
+		</div>
+
+		<button
+			class="form__btn"
+			type="button"
+			(click)="onSubmit()"
+			[disabled]="submitted || form.invalid"
+			routerLink="/"
+		>
+			Add
+		</button>
+	</form>
+</div>
