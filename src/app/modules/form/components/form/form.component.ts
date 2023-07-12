@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { FormDataInterface } from '../../../../models/formData.interface'
 import { FormDataService } from '../../../../services/form-data.service'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 @Component({
 	selector: 'app-form',

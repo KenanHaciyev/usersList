@@ -8,6 +8,7 @@ import {
 import { ColumnsTypesInterface } from '../../models/columnsTypes.interface'
 import { FormDataInterface } from '../../models/formData.interface'
 import { FormDataService } from '../../services/form-data.service'
+import { SourceInterface } from '../../models/source.interface'
 import { takeUntil } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 
@@ -18,16 +19,19 @@ import { Subject } from 'rxjs'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent implements OnInit, OnDestroy {
-	public users: FormDataInterface[] = []
 	public destroyed$: Subject<boolean> = new Subject<boolean>()
 
-	columns: ColumnsTypesInterface[] = [
-		{ text: 'Firstname', dataField: 'Firstname', width: 200 },
-		{ text: 'Surname', dataField: 'Surname', width: 200 },
-		{ text: 'Date Of Birth', dataField: 'DateOfBirth', width: 200 },
-		{ text: 'Gender', dataField: 'Gender', width: 100 },
-		{ text: 'Mark', dataField: 'Mark', width: 250 },
-	]
+	source: SourceInterface = {
+		dataFields: [
+			{ name: 'name', type: 'string' },
+			{ name: 'surname', type: 'string' },
+			{ name: 'dateOfBirth', type: 'string' },
+			{ name: 'gender', type: 'string' },
+			{ name: 'mark', type: 'text' },
+		],
+		dataType: 'array',
+	}
+
 	constructor(
 		private formDataService: FormDataService,
 		private cdRef: ChangeDetectorRef,
@@ -37,10 +41,20 @@ export class MainComponent implements OnInit, OnDestroy {
 		this.formDataService.formData$
 			.pipe(takeUntil(this.destroyed$))
 			.subscribe((data: FormDataInterface[]) => {
-				this.users.push(...data)
+				this.source.localdata = data
 				this.cdRef.detectChanges()
 			})
 	}
+
+	dataAdapter: any = new jqx.dataAdapter(this.source)
+
+	columns: ColumnsTypesInterface[] = [
+		{ text: 'Name', dataField: 'name', width: 110 },
+		{ text: 'Surname', dataField: 'surname', width: 130 },
+		{ text: 'Date of Birth', dataField: 'dateOfBirth', width: 120 },
+		{ text: 'Gender', dataField: 'gender', width: 80 },
+		{ text: 'Mark', dataField: 'mark', width: 180 },
+	]
 
 	ngOnDestroy(): void {
 		this.destroyed$.next(true)

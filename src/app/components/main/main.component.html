@@ -1,36 +1,16 @@
 <div class="wrapper">
 	<a class="add-link" routerLink="/addForm">Add User</a>
-	<div class="table" *ngIf="users.length; else empty">
-		<jqxDataTable
-			[source]="users"
-			[columnsResize]="true"
-			[width]="950"
+	<div class="table" *ngIf="source.localdata?.length; else empty">
+		<jqxGrid
+			[theme]="'material'"
+			[width]="'620px'"
+			[source]="dataAdapter"
 			[columns]="columns"
-			[selectionMode]="'multipleRows'"
-			[editable]="true"
+			[autoheight]="true"
+			[autorowheight]="true"
 		>
-			<table id="table" border="1">
-				<thead>
-					<tr>
-						<th>Firstname</th>
-						<th>Surname</th>
-						<th>DateOfBirth</th>
-						<th>Gender</th>
-						<th>Mark</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let user of users">
-						<td>{{ user.name }}</td>
-						<td>{{ user.surname }}</td>
-						<td>{{ user.dateOfBirth | date: 'dd/MM/YYYY' }}</td>
-						<td>{{ user.gender }}</td>
-						<td>{{ user.mark }}</td>
-					</tr>
-				</tbody>
-			</table>
-		</jqxDataTable>
+		</jqxGrid>
 	</div>
 
-	<ng-template #empty><h2 class="empty">No user added...</h2></ng-template>
+	<ng-template #empty><h2>No user added...</h2></ng-template>
 </div>
